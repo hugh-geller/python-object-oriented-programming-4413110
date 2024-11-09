@@ -11,6 +11,13 @@ from dataclasses import dataclass
 @dataclass
 class Asset(ABC):
     price: float
+
+    @abstractmethod
+    def __lt__(self,other):
+        pass
+    
+    #originally was missing __lt__
+    #need to add it so that the subclasses are required to overwrite
     
 @dataclass
 class Stock(Asset):
@@ -21,6 +28,8 @@ class Stock(Asset):
         if not isinstance(other,Stock):
             raise ValueError("Can't compare stock to a non-stock")
         return self.price < other.price
+    
+    #solution doesn't use the raise ValueError
 
 @dataclass
 class Bond(Asset):

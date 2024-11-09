@@ -12,14 +12,37 @@
 # For stocks: "Ticker: Company -- $Price"
 # For bonds: "description: duration'yr' : $price : yieldamt%"
 
-class Asset():
-    pass
+from abc import ABC, abstractmethod
 
-class Stock():
-    pass
+class Asset(ABC):
+    def __init__(self,price):
+        self.price = price
 
-class Bond():
-    pass
+    @abstractmethod
+    def get_description(self):
+        pass
+
+class Stock(Asset):
+    def __init__(self,ticker,price,company_name):
+        super().__init__(price)
+        # super().__init__()
+        self.ticker = ticker
+        # self.price = price
+        self.companyName = company_name
+    
+    def get_description(self):
+        return f"{self.ticker}: {self.companyName} -- {self.price}"
+
+class Bond(Asset):
+    def __init__(self,price,description,duration,yieldamt):
+        super().__init__(price)
+        # self.price = price
+        self.description = description
+        self.duration = duration
+        self.yieldamt = yieldamt
+    
+    def get_description(self):
+        return f"{self.description}: {self.duration}'yr' : ${self.price} : {self.yieldamt}%"
 
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~

@@ -15,6 +15,14 @@ class Asset(ABC):
     @abstractmethod
     def __str__(self):
         pass
+    
+    @abstractmethod
+    def __ge__(self,value):
+        pass
+    
+    @abstractmethod
+    def __lt__(self,value):
+        pass
 
 
 class Stock(Asset):
@@ -22,6 +30,19 @@ class Stock(Asset):
         super().__init__(price)
         self.company = company
         self.ticker = ticker
+    
+    def __str__(self):
+        return f"{self.ticker}: {self.company} -- {self.price}"
+    
+    def __ge__(self,value):
+        if not isinstance(value,Stock):
+            raise ValueError("Can't compare stock to a non-stock")
+        return self.price >= value.price
+    
+    def __lt__(self,value):
+        if not isinstance(value,Stock):
+            raise ValueError("Can't compare stock to a non-stock")
+        return self.price < value.price
 
 
 class Bond(Asset):
@@ -30,6 +51,19 @@ class Bond(Asset):
         self.description = description
         self.duration = duration
         self.yieldamt = yieldamt
+    
+    def __str__(self):
+        return f"{self.description}: {self.duration}yr : {self.price} : {self.yieldamt}"
+    
+    def __ge__(self,value):
+        if not isinstance(value,Bond):
+            raise ValueError("Can't compare bond to a non-bond")
+        return self.yieldamt >= value.yieldamt
+    
+    def __lt__(self,value):
+        if not isinstance(value,Bond):
+            raise ValueError("Can't compare bond to a non-bond")
+        return self.yieldamt < value.yieldamt
 
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~

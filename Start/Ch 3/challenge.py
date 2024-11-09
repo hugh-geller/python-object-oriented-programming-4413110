@@ -15,7 +15,9 @@ class Asset(ABC):
     @abstractmethod
     def __str__(self):
         pass
-    
+
+    # didn't need to make the following two abstract methods
+
     @abstractmethod
     def __ge__(self,value):
         pass
